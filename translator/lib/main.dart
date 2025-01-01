@@ -140,6 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
             itemCount: _translations.length,
             itemBuilder: (context, index) {
               return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // First TextField
                   Expanded(
