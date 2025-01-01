@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text('Add Red Rectangle')),
+        appBar: AppBar(title: Text('Translation')),
         body: MyHomePage(),
       ),
     );
@@ -72,17 +72,17 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _load(); // Call _load() when the widget is created.
+    _loadSavedText(); // Call _load() when the widget is created.
   }
 
 
-  void _addRectangle() {
+  void _addTranslationPair() {
     setState(() {
       // Add an index to represent a new rectangle.
       _translations.add(TranslationPortion());
     });
   }
-  Future<void> _load() async {
+  Future<void> _loadSavedText() async {
       try {
         final response = await http.get(
           Uri.parse('http://localhost:8080/load'),
@@ -90,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
           if (response.statusCode == 200) {
             final List<dynamic> loadedRectangles = jsonDecode(response.body);
 
-            // Update state safely after data is loaded
+            // Update state after data is loaded
             setState(() {
               _translations = loadedRectangles.map((json) => TranslationPortion.fromJson(json as Map<String, dynamic>))
                               .toList();
@@ -103,10 +103,9 @@ class _MyHomePageState extends State<MyHomePage> {
         print(e);
       }
   }
-  Future<void> _sendRequest() async {
+  Future<void> _saveAtServer() async {
     try {
       String jsonString = jsonEncode(_translations);
-      print(jsonString);
       final response = await http.post(
         Uri.parse('http://localhost:8080/write'),
         headers: {'Content-Type': 'text/plain'},
@@ -123,12 +122,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return Column(
       children: [
         ElevatedButton(
-          onPressed: _addRectangle, // Add rectangle on button press.
-          child: Text('Add Rectangle'),
+          onPressed: _addTranslationPair, // Add rectangle on button press.
+          child: Text('Add Translation pair'),
         ),
         ElevatedButton(
-          onPressed: _sendRequest, // Add rectangle on button press.
-          child: Text('Add translation pair'),
+          onPressed: _saveAtServer, // Add rectangle on button press.
+          child: Text('Save'),
         ),
         Expanded(
           child: ListView.builder(
@@ -141,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: TextField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'First Field ${index}',
+                        labelText: 'Original paragraph ${index}',
                       ),
                       controller: _translations[index].original_controller,
                       maxLines: null,
@@ -153,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: TextField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'First Field ${index}',
+                        labelText: 'Translated paragraph ${index}',
                       ),
                       controller: _translations[index].translation_controller,
                       maxLines: null,
@@ -163,23 +162,6 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             }
           )
-          // child: ListView.builder(
-          //   itemCount: _rectangles.length,
-          //   itemBuilder: (context, index) {
-          //     return Container(
-          //       width: 100,
-          //       height: 100,
-          //       color: Colors.red,
-          //       margin: EdgeInsets.only(top: 10),
-          //       child: Center(
-          //         child: Text(
-          //           'Rectangle ${_rectangles[index]}',
-          //           style: TextStyle(color: Colors.white),
-          //         ),
-          //       ),
-          //     );
-          //   },
-          // ),
         ),
       ],
     );
