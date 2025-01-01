@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
@@ -33,6 +32,7 @@ void main() async {
   });
 
   final handler = const Pipeline()
+      .addMiddleware(_addCorsHeadersMiddleware())
       .addMiddleware(logRequests())
       .addHandler(router);
 
@@ -55,4 +55,28 @@ Future<String> _loadItemsFromFile(File file) async {
 
 Future<void> _saveItemsToFile(File file, String items) async {
   await file.writeAsString(items);
+}
+
+Middleware _addCorsHeadersMiddleware() {
+  return (Handler handler) {
+    return (Request request) async {
+      // Handle OPTIONS preflight requests
+      if (request.method == 'OPTIONS') {
+        return Response.ok('', headers: _corsHeaders());
+      }
+
+      // Add CORS headers to all responses
+      final response = await handler(request);
+      return response.change(headers: _corsHeaders());
+    };
+  };
+}
+
+// Define CORS headers
+Map<String, String> _corsHeaders() {
+  return {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept',
+  };
 }
