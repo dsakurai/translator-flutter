@@ -5,7 +5,7 @@ import 'package:shelf_router/shelf_router.dart';
 
 void main() async {
   final router = Router();
-  final file = File('store/file.txt');
+  final file = File('store/file.json');
   String items = await _loadItemsFromFile(file);
 
   // Define routes
