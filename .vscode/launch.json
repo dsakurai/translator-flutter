@@ -16,12 +16,21 @@
         "flutterMode": "debug",
         "deviceId": "chrome",
         "cwd": "${workspaceFolder}/client"
+      },
+      {
+        "name": "Run Translator Client",
+        "type": "dart",
+        "request": "launch",
+        "program": "lib/main.dart",
+        "flutterMode": "debug",
+        "deviceId": "chrome",
+        "cwd": "${workspaceFolder}/translator"
       }
     ],
     "compounds": [
       {
-        "name": "Run All",
-        "configurations": ["Run Server", "Run Flutter Client"]
+        "name": "Run Translator",
+        "configurations": ["Run Server", "Run Translator Client"]
       }
     ]
   }
