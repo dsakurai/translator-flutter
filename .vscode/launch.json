@@ -9,7 +9,7 @@
         "cwd": "${workspaceFolder}/server"
       },
       {
-        "name": "Run Flutter App",
+        "name": "Run Flutter Client",
         "type": "dart",
         "request": "launch",
         "program": "lib/main.dart",
@@ -20,8 +20,8 @@
     ],
     "compounds": [
       {
-        "name": "Run Server and Flutter App",
-        "configurations": ["Run Server", "Run Flutter App"]
+        "name": "Run All",
+        "configurations": ["Run Server", "Run Flutter Client"]
       }
     ]
   }
