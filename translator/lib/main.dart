@@ -121,6 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(height: 8.0),
         Row(
           children: [
             ElevatedButton(
@@ -133,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-        SizedBox(height: 16.0),
+        SizedBox(height: 8.0),
         Expanded(
           child: ListView.separated(
             padding: EdgeInsets.only(top: 20.0, bottom: MediaQuery.of(context).size.height * 0.5),
