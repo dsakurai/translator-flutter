@@ -6,7 +6,7 @@ import 'package:shelf_router/shelf_router.dart';
 
 void main() async {
   final router = Router();
-  final file = File('file.txt');
+  final file = File('store/file.txt');
   String items = await _loadItemsFromFile(file);
 
   // Define routes
@@ -47,6 +47,7 @@ Future<String> _loadItemsFromFile(File file) async {
   } else {
     // If the file doesn't exist, create it with an empty map
     final contents = "";
+    file.createSync(recursive: true);
     await file.writeAsString(contents);
     return contents;
   }
