@@ -105,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   Future<void> _saveAtServer() async {
     try {
-      String jsonString = jsonEncode(_translations);
+      String jsonString = JsonEncoder.withIndent('  ').convert(_translations);
       final response = await http.post(
         Uri.parse('http://localhost:8080/write'),
         headers: {'Content-Type': 'text/plain'},
