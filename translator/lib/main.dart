@@ -121,16 +121,22 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ElevatedButton(
-          onPressed: _addTranslationPair, // Add rectangle on button press.
-          child: Text('Add Translation pair'),
+        Row(
+          children: [
+            ElevatedButton(
+              onPressed: _addTranslationPair, // Add rectangle on button press.
+              child: Text('Add Translation pair'),
+            ),
+            ElevatedButton(
+              onPressed: _saveAtServer, // Add rectangle on button press.
+              child: Text('Save'),
+            ),
+          ],
         ),
-        ElevatedButton(
-          onPressed: _saveAtServer, // Add rectangle on button press.
-          child: Text('Save'),
-        ),
+        SizedBox(height: 16.0),
         Expanded(
-          child: ListView.builder(
+          child: ListView.separated(
+            separatorBuilder: (context, index) => SizedBox(height: 8.0),
             itemCount: _translations.length,
             itemBuilder: (context, index) {
               return Row(
