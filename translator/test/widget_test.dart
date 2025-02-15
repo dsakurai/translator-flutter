@@ -7,11 +7,13 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text('Simple File Handling')),
+        appBar: AppBar(title: const Text('Simple File Handling')),
         body: MyHomePage(),
       ),
     );
@@ -19,6 +21,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -70,11 +74,11 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             ElevatedButton(
               onPressed: _addRectangle,
-              child: Text('Add Rectangle'),
+              child: const Text('Add Rectangle'),
             ),
             ElevatedButton(
               onPressed: _saveRectangles,
-              child: Text('Save Rectangles'),
+              child: const Text('Save Rectangles'),
             ),
           ],
         ),
@@ -86,11 +90,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: 100,
                 height: 100,
                 color: Colors.red,
-                margin: EdgeInsets.only(top: 10),
+                margin: const EdgeInsets.only(top: 10),
                 child: Center(
                   child: Text(
                     'Rectangle ${_rectangles[index]}',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               );

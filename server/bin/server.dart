@@ -34,7 +34,7 @@ void main() async {
   final handler = const Pipeline()
       .addMiddleware(_addCorsHeadersMiddleware())
       .addMiddleware(logRequests())
-      .addHandler(router);
+      .addHandler(router.call);
 
   final server = await shelf_io.serve(handler, 'localhost', 8080);
   print('Server running on http://${server.address.host}:${server.port}');

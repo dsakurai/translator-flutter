@@ -7,11 +7,13 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text('Translation')),
+        appBar: AppBar(title: const Text('Translation')),
         body: MyHomePage(),
       ),
     );
@@ -36,11 +38,11 @@ class TranslationPortion {
     translation_controller = TextEditingController(text: translation) {
       original_controller.addListener(() {
             // Update _translations whenever text is edited
-            this.original = this.original_controller.text;
+            original = original_controller.text;
           });
       translation_controller.addListener(() {
             // Update _translations whenever text is edited
-            this.translation = this.translation_controller.text;
+            translation = translation_controller.text;
           });
     }
 
@@ -62,6 +64,8 @@ class TranslationPortion {
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -105,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   Future<void> _saveAtServer() async {
     try {
-      String jsonString = JsonEncoder.withIndent('  ').convert(_translations);
+      String jsonString = const JsonEncoder.withIndent('  ').convert(_translations);
       final response = await http.post(
         Uri.parse('http://localhost:8080/write'),
         headers: {'Content-Type': 'text/plain'},
@@ -121,24 +125,24 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8.0),
         Row(
           children: [
             ElevatedButton(
               onPressed: _addTranslationPair, // Add rectangle on button press.
-              child: Text('Add Translation pair'),
+              child: const Text('Add Translation pair'),
             ),
             ElevatedButton(
               onPressed: _saveAtServer, // Add rectangle on button press.
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         ),
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8.0),
         Expanded(
           child: ListView.separated(
             padding: EdgeInsets.only(top: 20.0, bottom: MediaQuery.of(context).size.height * 0.5),
-            separatorBuilder: (context, index) => SizedBox(height: 8.0),
+            separatorBuilder: (context, index) => const SizedBox(height: 8.0),
             itemCount: _translations.length,
             itemBuilder: (context, index) {
               return Row(
@@ -148,20 +152,20 @@ class _MyHomePageState extends State<MyHomePage> {
                   Expanded(
                     child: TextField(
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Original paragraph ${index}',
+                        border: const OutlineInputBorder(),
+                        labelText: 'Original paragraph $index',
                       ),
                       controller: _translations[index].original_controller,
                       maxLines: null,
                     ),
                   ),
-                  SizedBox(width: 10), // Space between fields
+                  const SizedBox(width: 10), // Space between fields
                   // Second TextField
                   Expanded(
                     child: TextField(
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Translated paragraph ${index}',
+                        border: const OutlineInputBorder(),
+                        labelText: 'Translated paragraph $index',
                       ),
                       controller: _translations[index].translation_controller,
                       maxLines: null,
