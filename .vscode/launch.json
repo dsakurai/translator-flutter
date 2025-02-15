@@ -32,6 +32,7 @@
         "request": "launch",
         "program": "lib/main.dart",
         "deviceId": "web-server",
+        "flutterMode": "release",
         "cwd": "${workspaceFolder}/translator"
       },
       {
