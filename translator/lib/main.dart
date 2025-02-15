@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _loadSavedText() async {
       try {
         final response = await http.get(
-          Uri.parse('http://localhost:8080/load'),
+          Uri.parse('https://localhost:8080/load'),
           );
           if (response.statusCode == 200) {
             final List<dynamic> loadedRectangles = jsonDecode(response.body);
@@ -102,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
           } else {
             print('Failed to load rectangles. Status code: ${response.statusCode}');
           }
-        // final response = await http.get(Uri.parse('http://localhost:8080/'));
+        // final response = await http.get(Uri.parse('https://localhost:8080/'));
       } catch (e) {
         print(e);
       }
@@ -111,11 +111,11 @@ class _MyHomePageState extends State<MyHomePage> {
     try {
       String jsonString = const JsonEncoder.withIndent('  ').convert(_translations);
       final response = await http.post(
-        Uri.parse('http://localhost:8080/write'),
+        Uri.parse('https://localhost:8080/write'),
         headers: {'Content-Type': 'text/plain'},
         body: jsonString,
         );
-      // final response = await http.get(Uri.parse('http://localhost:8080/'));
+      // final response = await http.get(Uri.parse('https://localhost:8080/'));
     } catch (e) {
       print(e);
     }

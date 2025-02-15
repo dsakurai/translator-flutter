@@ -9,6 +9,7 @@ environment:
 dependencies:
   args: ^2.4.0
   shelf: ^1.4.0
+  shelf_proxy: ^1.0.4
   shelf_router: ^1.1.0
 
 dev_dependencies:

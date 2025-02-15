@@ -2,10 +2,13 @@ import 'dart:io';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_router/shelf_router.dart';
+import 'package:shelf_proxy/shelf_proxy.dart';
 
 void main() async {
   final router = Router();
   final file = File('store/file.json');
+  final certificate = File('certificates/myCA.pem');
+  final key = File('certificates/myserver.key');
   String items = await _loadItemsFromFile(file);
 
   // Define routes
@@ -31,12 +34,33 @@ void main() async {
     exit(0);
   });
 
+  // Proxy requests to another backend (e.g., Flutter backend on port 5000)
+  var flutterBackend =
+    // proxyHandler('http://localhost:5000');
+    (Request request) {
+    var newRequest = request.change(path: request.url.path.replaceFirst(RegExp('^flutter/'), ''));
+    print(request.url.path.replaceFirst('flutter', ''));
+    return proxyHandler('http://localhost:5000')(newRequest);
+  };
+
+  router.mount('/flutter', flutterBackend);
+
+
   final handler = const Pipeline()
       .addMiddleware(_addCorsHeadersMiddleware())
       .addMiddleware(logRequests())
       .addHandler(router.call);
 
-  final server = await shelf_io.serve(handler, 'localhost', 8080);
+
+
+  final server = await shelf_io.serve(handler, 'localhost', 8080,
+    securityContext: // HTTPS
+      SecurityContext()
+        ..useCertificateChain(certificate.path)
+        ..usePrivateKey(key.path,
+                          //password: '2QZ^%8D7a25LQP'
+                           )
+  );
   print('Server running on http://${server.address.host}:${server.port}');
 }
 
