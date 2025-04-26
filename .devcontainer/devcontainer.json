@@ -24,7 +24,8 @@
     "customizations": {
         "vscode": {
             "extensions": [
-                "docsmsft.docs-yaml"
+                "docsmsft.docs-yaml",
+                "Dart-Code.flutter"
             ]
         }
     }
