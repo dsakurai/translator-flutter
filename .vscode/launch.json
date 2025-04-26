@@ -33,6 +33,7 @@
         "program": "lib/main.dart",
         "deviceId": "web-server",
         "flutterMode": "release",
+        "args": ["--web-port", "5000"],
         "cwd": "${workspaceFolder}/translator"
       },
       {
