@@ -6,6 +6,8 @@ import 'package:shelf_router/shelf_router.dart';
 void main() async {
   final router = Router();
   final file = File('store/file.json');
+  final certificate = File('certificates/localhost.pem');
+  final key = File('certificates/localhost-key.pem');
   String items = await _loadItemsFromFile(file);
 
   // Define routes
@@ -25,19 +27,18 @@ void main() async {
     return Response.ok('File overwritten');
   });
 
-  router.get('/shutdown', (Request request) async {
-    await Future.delayed(Duration(seconds: 1)); // Allow response before shutdown
-    print('Server shutting down...');
-    exit(0);
-  });
-
   final handler = const Pipeline()
       .addMiddleware(_addCorsHeadersMiddleware())
       .addMiddleware(logRequests())
       .addHandler(router.call);
 
-  final server = await shelf_io.serve(handler, 'localhost', 8080);
-  print('Server running on http://${server.address.host}:${server.port}');
+  final server = await shelf_io.serve(handler, 'localhost', 8080,
+    securityContext: // HTTPS
+      SecurityContext()
+        ..useCertificateChain(certificate.path)
+        ..usePrivateKey(key.path)
+  );
+  print('Server running on https://${server.address.host}:${server.port}');
 }
 
 Future<String> _loadItemsFromFile(File file) async {
