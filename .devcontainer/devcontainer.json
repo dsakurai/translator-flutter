@@ -3,15 +3,18 @@
     "build": {
       "dockerfile": "Dockerfile"
     },
-    "workspaceMount": "",
     "remoteUser": "vscode",
     "containerEnv": {
         "HOME": "/home/vscode"
     },
+    
+    "postCreateCommand": "/workspace/pub-get.sh",
+
+    "workspaceFolder": "/workspace",
 
     "runArgs": [
         "--userns=keep-id",
-        "--volume=${localWorkspaceFolder}:/workspaces/${localWorkspaceFolderBasename}:Z"
+        "--volume=${localWorkspaceFolder}:/workspace:Z"
 
         // X11
         // NOT WORKING. Check out Toolbox: https://github.com/containers/toolbox/issues/610
