@@ -23,7 +23,7 @@ RUN mkdir -p /opt/app && chown vscode:vscode /opt/app
 
 USER vscode
 
-ARG FLUTTER_XZ=flutter_linux_3.29.0-stable.tar.xz
+ARG FLUTTER_XZ=flutter_linux_3.35.7-stable.tar.xz
 
 WORKDIR /opt/app
 
