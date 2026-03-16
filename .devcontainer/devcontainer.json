@@ -13,7 +13,7 @@
     "workspaceFolder": "/workspace",
 
     "runArgs": [
-        "--userns=keep-id",
+        // "--userns=keep-id", // for podman
         "--volume=${localWorkspaceFolder}:/workspace:Z"
 
         // X11
