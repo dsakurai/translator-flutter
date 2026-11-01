@@ -9,16 +9,7 @@
         "cwd": "${workspaceFolder}/server"
       },
       {
-        "name": "Run Flutter Client",
-        "type": "dart",
-        "request": "launch",
-        "program": "lib/main.dart",
-        "flutterMode": "debug",
-        "deviceId": "chrome",
-        "cwd": "${workspaceFolder}/client"
-      },
-      {
-        "name": "Debug Translator Client",
+        "name": "Debug Client",
         "type": "dart",
         "request": "launch",
         "program": "lib/main.dart",
@@ -27,7 +18,7 @@
         "cwd": "${workspaceFolder}/translator"
       },
       {
-        "name": "Run Translator Client",
+        "name": "Run Client",
         "type": "dart",
         "request": "launch",
         "program": "lib/main.dart",
@@ -35,23 +26,16 @@
         "flutterMode": "release",
         "args": ["--web-port", "5000"],
         "cwd": "${workspaceFolder}/translator"
-      },
-      {
-        "name": "Run Native Translator Client",
-        "type": "dart",
-        "request": "launch",
-        "program": "lib/main.dart",
-        "cwd": "${workspaceFolder}/translator"
       }
     ],
     "compounds": [
       {
         "name": "Debug Translator",
-        "configurations": ["Run Server", "Debug Translator Client"]
+        "configurations": ["Run Server", "Debug Client"]
       },
       {
         "name": "Run Translator",
-        "configurations": ["Run Server", "Run Translator Client"]
+        "configurations": ["Run Server", "Run Client"]
       }
     ]
   }
